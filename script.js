@@ -1,43 +1,76 @@
 const container = document.querySelector("#container");
-const debugBtn = document.querySelector("#debugBtn")
+const debugBtn = document.querySelector("#debugBtn");
+const newGrid = document.querySelector("#newGrid");
 let debug = false;
+
+let cellNo = prompt("Enter the number of Cells: ");
+createCell(cellNo, debug);
+draw("green")
 
 function createCell(sideLength, debug = false) {
     for (let i = 0; i < sideLength; i++) {
         for (let j = 0; j < sideLength; j++) {
             const square = document.createElement('div');
             square.classList.add('cell');
-
-            if (debug) {
-                square.textContent = `R# ${i + 1} C# ${j + 1}`
-            }
             container.appendChild(square);
         }
     }
+    const containerWidth = (sideLength * 52) + 2;
+    container.style.width = containerWidth + 'px';
 }
 
 debugBtn.addEventListener("click", () => {
-
-    debug = !debug; // Toggle debug mode
+    debug = !debug;
     console.log(debug);
-    container.innerHTML = ''; // Clear previous cells
-    createCell(16, debug)
 
+    debugMode();
+
+    if (debug)
+        draw("red")
+
+    else
+        draw("yellow")
+});
+
+
+newGrid.addEventListener("click", () => {
+    cellNo = prompt("Enter the number of Cells: ");
+    container.innerHTML = '';
+    createCell(cellNo, debug);
+    draw("blue")
+});
+
+
+
+function debugMode() {
+    const cells = document.querySelectorAll(".cell");
+
+    if (debug) {
+        let cellNo = 0;
+        cells.forEach((cell) => {
+            cellNo += 1;
+            cell.textContent = cellNo;
+        });
+    } else {
+        cells.forEach((cell) => {
+            cell.textContent = '';
+        });
+    }
+}
+
+function draw(color) {
     let cells = document.querySelectorAll(".cell");
-
-    cells.forEach((cell, index) => {
-        cell.addEventListener("click", () => {
-            cell.style.backgroundColor = "red";
+    cells.forEach((cell) => {
+        let isEraser = false;
+        cell.addEventListener("mouseenter", () => {
+            if (!isEraser) {
+                cell.style.backgroundColor = color;
+                isEraser = true;
+            } else {
+                cell.style.backgroundColor = "gainsboro";
+                isEraser = false;
+            }
         });
     });
-});
 
-createCell(16, debug);
-
-let cells = document.querySelectorAll(".cell");
-
-cells.forEach((cell) => {
-    cell.addEventListener("click", () => {
-        cell.style.backgroundColor = "yellow";
-    });
-});
+}
