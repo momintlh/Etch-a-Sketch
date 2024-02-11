@@ -9,6 +9,9 @@ h1 {
     margin-bottom: 5%;
 }
 
+#newGrid {
+    float: left;
+}
 #debugBtn {
     float: right;
 }

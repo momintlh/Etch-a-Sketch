@@ -4,10 +4,10 @@ const newGrid = document.querySelector("#newGrid");
 let debug = false;
 
 let cellNo = prompt("Enter the number of Cells: ");
-createCell(cellNo, debug);
+createCell(cellNo);
 draw("green")
 
-function createCell(sideLength, debug = false) {
+function createCell(sideLength) {
     for (let i = 0; i < sideLength; i++) {
         for (let j = 0; j < sideLength; j++) {
             const square = document.createElement('div');
@@ -36,7 +36,7 @@ debugBtn.addEventListener("click", () => {
 newGrid.addEventListener("click", () => {
     cellNo = prompt("Enter the number of Cells: ");
     container.innerHTML = '';
-    createCell(cellNo, debug);
+    createCell(cellNo);
     draw("blue")
 });
 
